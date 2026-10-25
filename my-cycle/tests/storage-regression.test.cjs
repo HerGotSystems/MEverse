@@ -1,0 +1,11 @@
+const {test}=require('node:test');
+const assert=require('node:assert/strict');
+const fs=require('node:fs');
+const path=require('node:path');
+const html=fs.readFileSync(path.join(__dirname,'..','index.html'),'utf8');
+const script=html.match(/<script>([\s\S]*?)<\/script>/)?.[1]||'';
+test('save verifies latest encrypted blob',()=>{assert.match(script,/localStorage\.getItem\(STORAGE\)!==blob/);assert.match(script,/storageSnapshot=blob/)});
+test('backup exports last verified ciphertext',()=>{assert.match(script,/JSON\.parse\(storageSnapshot\)/)});
+test('writes after background lock cannot redraw unlocked UI',()=>{assert.match(script,/if\(!saved\|\|!data\)return/);assert.match(script,/if\(data\)render\(\)/)});
+test('backup restore checks for concurrent storage changes',()=>{assert.match(script,/localStorage\.getItem\(STORAGE\)!==storageSnapshot/);assert.match(script,/function validate\(result\)/)});
+test('app rejects oversized backup before reading it',()=>{assert.match(script,/f\.size>5\*1024\*1024/)});
