@@ -1,0 +1,22 @@
+name: MY CYCLE checks
+on:
+  push:
+    paths:
+      - 'my-cycle/**'
+      - '.github/workflows/my-cycle-checks.yml'
+  pull_request:
+    paths:
+      - 'my-cycle/**'
+      - '.github/workflows/my-cycle-checks.yml'
+permissions:
+  contents: read
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Run MY CYCLE checks
+        run: node --test my-cycle/tests/*.test.cjs
