@@ -26,3 +26,18 @@ Host/CDN: static HTML/CSS/JS files. Device: all health entries, settings, passph
 - Independent security/privacy review before representing app as production ready.
 
 Never commit a real user's health records or backups.
+
+
+## v0.4 implementation update (2026-10-25)
+
+- Save operations now use a single in-memory transaction gate and restore the previous data snapshot if the encrypted browser-storage write throws.
+- Mark-day, clear-day, settings and quick-log handlers report write failures rather than claiming success.
+- Hiding the page requests an immediate lock; if a write is in flight, locking follows its completion.
+- Restoring an encrypted backup writes the new ciphertext before replacing the active decrypted session.
+- JavaScript parse validation passed. No real device or browser integration testing performed.
+
+### Still outstanding
+- Implement durable write verification (including browser eviction and multi-tab conflicts), real backup recovery trials, and an idle-lock policy.
+- Check privacy of OS task-switcher snapshots: visibility-based locking is not equivalent to native secure-window protection.
+- Improve encrypted storage architecture and protect against cross-tab stale writes.
+- Current protection assumes the browser and loaded application code are trustworthy. It does not protect against malicious extensions or compromised devices.
