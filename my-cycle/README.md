@@ -19,7 +19,7 @@ A period-first tracker with no account, no advertising and no fertility prompts 
 
 ## Repository layout
 
-The original MEverse project remains intact. This separate directory is reserved for MY CYCLE. The first standalone HTML prototype was produced as a conversation artifact, and is **not yet committed here**. Do not confuse this design scaffold with a deployed app.
+The original MEverse project remains intact. This separate directory is reserved for MY CYCLE. The standalone mobile-first prototype is committed at `my-cycle/index.html`, alongside its offline shell and tests. Do not confuse this design scaffold with a deployed app.
 
 ## Technical direction
 
